@@ -252,6 +252,10 @@ body {
   }
 }
 
+.js [data-anime="accordion"] dt {
+  cursor: pointer;
+}
+
 .js [data-anime="accordion"] dd {
   display: none;
 }
