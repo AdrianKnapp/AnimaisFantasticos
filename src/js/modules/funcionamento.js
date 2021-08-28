@@ -1,30 +1,41 @@
-export default function initFuncionamento() {
-  const funcionamento = document.querySelector('[data-semana]');
+export default class Funcionamento {
+  constructor(funcionamento, activeClass) {
+    this.funcionamento = document.querySelector(funcionamento);
+    this.activeClass = activeClass;
+  }
 
-  const diasSemana = funcionamento.dataset.semana.split(',').map(Number);
-  const horarioSemana = funcionamento.dataset.horario.split(',').map(Number);
+  dadosFuncionamento() {
+    this.diasSemana = this.funcionamento.dataset.semana.split(',').map(Number);
+    this.horarioSemana = this.funcionamento.dataset.horario.split(',').map(Number);
+  }
 
-  const dataAgora = new Date();
-  const diaAgora = dataAgora.getDay();
-  const horarioAgora = dataAgora.getHours();
+  dadosAgora() {
+    this.agora = new Date();
+    this.diaSemana = this.agora.getDay();
+    this.horarioAgora = this.agora.getUTCHours() - 3;
+  }
 
-  const semanaAberto = diasSemana.indexOf(diaAgora) !== -1;
+  estaAberto() {
+    const semanaAberto = this.diasSemana.indexOf(this.diaAgora) !== -1;
+    const horarioAberto = (
+      this.horarioAgora >= this.horarioSemana[0] && this.horarioAgora < this.horarioSemana[1]);
 
-  const horarioAberto = (horarioAgora >= horarioSemana[0] && horarioAgora < horarioSemana[1]);
+    return semanaAberto && horarioAberto;
+  }
 
-  if (semanaAberto && horarioAberto) {
-    funcionamento.classList.add('aberto');
+  ativaAberto() {
+    if (this.estaAberto()) {
+      this.funcionamento.classList.add(this.activeClass);
+    }
+  }
+
+  init() {
+    if (this.funcionamento) {
+      this.dadosFuncionamento();
+      this.dadosAgora();
+      this.ativaAberto();
+    }
+
+    return this;
   }
 }
-
-/* const agora = new Date();
-const futuro = new Date('Jan 1 2022');
-
-function transformarDias(tempo) {
-  return tempo / (24 * 60 * 60 * 1000);
-}
-
-const diasAgora = transformarDias(agora.getTime());
-const diasFuturo = transformarDias(futuro.getTime());
-
-console.log(diasFuturo - diasAgora);  */
