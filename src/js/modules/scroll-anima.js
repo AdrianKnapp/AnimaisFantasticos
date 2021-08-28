@@ -1,9 +1,11 @@
+import debounce from './helpers/debounce.js';
+
 export default class ScrollAnima {
   constructor(sections) {
     this.sections = document.querySelectorAll(sections);
     this.windowMetade = window.innerHeight * 0.6;
 
-    this.checkDistance = this.checkDistance.bind(this);
+    this.checkDistance = debounce(this.checkDistance.bind(this), 50);
   }
 
   getDistance() {
@@ -17,7 +19,6 @@ export default class ScrollAnima {
   }
 
   checkDistance() {
-    console.log(window.pageYOffset);
     this.distance.forEach((item) => {
       if (window.pageYOffset > item.offset) {
         item.element.classList.add('ativo');
