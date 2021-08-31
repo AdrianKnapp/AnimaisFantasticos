@@ -1,2 +1,2 @@
 ### Try yourself 
-https://adrianknapp.github.io/AnimaisFantasticos/
+https://adrianknapp.github.io/animais-fantasticos/
